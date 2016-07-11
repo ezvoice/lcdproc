@@ -1,4 +1,4 @@
-from widgets import StringWidget, TitleWidget, HBarWidget, VBarWidget, IconWidget, ScrollerWidget, FrameWidget,NumberWidget
+from .widgets import StringWidget, TitleWidget, HBarWidget, VBarWidget, IconWidget, ScrollerWidget, FrameWidget,NumberWidget
 
 
 class Screen(object):
