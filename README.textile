@@ -17,3 +17,5 @@ Alternatively, you could use pip to install the package instead of easy_install.
 h3. Example Usage
 
 See *examples.py*
+
+!https://landscape.io/github/ezvoice/lcdproc/master/landscape.svg?style=plastic!:https://landscape.io/github/ezvoice/lcdproc/master
