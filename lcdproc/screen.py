@@ -22,6 +22,7 @@ class Screen(object):
         self.cursor_x = None
         self.cursor_y = None
         self.widgets = dict()
+        self.frames = dict()
 
         self.server.request("screen_add %s" % (ref))
         self.set_cursor("off")
@@ -208,6 +209,7 @@ class Screen(object):
                 direction=direction,
                 speed=speed)
             self.widgets[ref] = widget
+            self.frames[ref] = widget
             return self.widgets[ref]
 
     def add_number_widget(self, ref, x=1, value=1):
