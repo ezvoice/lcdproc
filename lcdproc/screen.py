@@ -131,10 +131,10 @@ class Screen(object):
     def clear(self):
         """ Clear Screen """
 
-        w1 = StringWidget(self, ref="_w1_", text=" "*20, x=1, y=1)
-        w2 = StringWidget(self, ref="_w2_", text=" "*20, x=1, y=2)
-        w3 = StringWidget(self, ref="_w3_", text=" "*20, x=1, y=3)
-        w4 = StringWidget(self, ref="_w4_", text=" "*20, x=1, y=4)
+        StringWidget(self, ref="_w1_", text=" "*20, x=1, y=1)
+        StringWidget(self, ref="_w2_", text=" "*20, x=1, y=2)
+        StringWidget(self, ref="_w3_", text=" "*20, x=1, y=3)
+        StringWidget(self, ref="_w4_", text=" "*20, x=1, y=4)
 
     def add_string_widget(self, ref, text="Text", x=1, y=1, frame=None):
         """ Add String Widget """
@@ -217,7 +217,7 @@ class Screen(object):
         """ Add Number Widget """
 
         if ref not in self.widgets:
-            widget = NumberWidget(screen=self, ref=ref, x=x, value=value, frame=Frame)
+            widget = NumberWidget(screen=self, ref=ref, x=x, value=value, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
