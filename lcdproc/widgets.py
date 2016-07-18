@@ -323,7 +323,7 @@ class FrameWidget(object):
 
 class NumberWidget(object):
 
-    def __init__(self, screen, ref, x, value, frame):
+    def __init__(self, screen, ref, x, value, frame=None):
 
         self.screen = screen
         self.ref = ref

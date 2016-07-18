@@ -136,11 +136,11 @@ class Screen(object):
         w3 = StringWidget(self, ref="_w3_", text=" "*20, x=1, y=3)
         w4 = StringWidget(self, ref="_w4_", text=" "*20, x=1, y=4)
 
-    def add_string_widget(self, ref, text="Text", x=1, y=1):
+    def add_string_widget(self, ref, text="Text", x=1, y=1, frame=None):
         """ Add String Widget """
 
         if ref not in self.widgets:
-            widget = StringWidget(screen=self, ref=ref, text=text, x=x, y=y)
+            widget = StringWidget(screen=self, ref=ref, text=text, x=x, y=y, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
@@ -152,31 +152,31 @@ class Screen(object):
             self.widgets[ref] = widget
             return self.widgets[ref]
 
-    def add_hbar_widget(self, ref, x=1, y=1, length=10):
+    def add_hbar_widget(self, ref, x=1, y=1, length=10, frame=None):
         """ Add Horizontal Bar Widget """
 
         if ref not in self.widgets:
-            widget = HBarWidget(screen=self, ref=ref, x=x, y=y, length=length)
+            widget = HBarWidget(screen=self, ref=ref, x=x, y=y, length=length, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
-    def add_vbar_widget(self, ref, x=1, y=1, length=10):
+    def add_vbar_widget(self, ref, x=1, y=1, length=10, frame=None):
         """ Add Vertical Bar Widget """
 
         if ref not in self.widgets:
-            widget = VBarWidget(screen=self, ref=ref, x=x, y=y, length=length)
+            widget = VBarWidget(screen=self, ref=ref, x=x, y=y, length=length, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
-    def add_icon_widget(self, ref, x=1, y=1, name="heart"):
+    def add_icon_widget(self, ref, x=1, y=1, name="heart", frame=None):
         """ Add Icon Widget """
 
         if ref not in self.widgets:
-            widget = IconWidget(screen=self, ref=ref, x=x, y=y, name=name)
+            widget = IconWidget(screen=self, ref=ref, x=x, y=y, name=name, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
-    def add_scroller_widget(self, ref, left=1, top=1, right=20, bottom=1, direction="h", speed=1, text="Message"):
+    def add_scroller_widget(self, ref, left=1, top=1, right=20, bottom=1, direction="h", speed=1, text="Message", frame=None):
         """ Add Scroller Widget """
 
         if ref not in self.widgets:
@@ -189,7 +189,8 @@ class Screen(object):
                 bottom=bottom,
                 direction=direction,
                 speed=speed,
-                text=text)
+                text=text,
+                frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
@@ -212,11 +213,11 @@ class Screen(object):
             self.frames[ref] = widget
             return self.widgets[ref]
 
-    def add_number_widget(self, ref, x=1, value=1):
+    def add_number_widget(self, ref, x=1, value=1, frame=None):
         """ Add Number Widget """
 
         if ref not in self.widgets:
-            widget = NumberWidget(screen=self, ref=ref, x=x, value=value)
+            widget = NumberWidget(screen=self, ref=ref, x=x, value=value, frame=Frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
