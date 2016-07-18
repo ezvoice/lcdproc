@@ -1,13 +1,13 @@
+"""Main screen controller for LCDProc Python module."""
+
 from .widgets import StringWidget, TitleWidget, HBarWidget, VBarWidget, IconWidget, ScrollerWidget, FrameWidget, NumberWidget
 
 
 class Screen(object):
-
-    """ LCDproc Screen Object """
+    """LCDproc Screen Object."""
 
     def __init__(self, server, ref):
-        """ Constructor """
-
+        """Initialization method for the Screen object."""
         self.server = server
         self.ref = ref
         self.name = ref
@@ -28,21 +28,18 @@ class Screen(object):
         self.set_cursor("off")
 
     def set_name(self, name):
-        """ Set Screen Name """
-
+        """Set Screen Name."""
         self.name = name
         self.server.request("screen_set %s name %s" % (self.ref, self.name))
 
     def set_width(self, width):
-        """ Set Screen Width """
-
+        """Set Screen Width."""
         if width > 0 and width <= self.server.server_info.get("screen_width"):
             self.width = width
             self.server.request("screen_set %s wid %i" % (self.ref, self.width))
 
     def set_height(self, height):
-        """ Set Screen Height """
-
+        """Set Screen Height."""
         if height > 0 and height <= self.server.server_info.get(
                 "screen_height"):
             self.height = height
@@ -51,8 +48,7 @@ class Screen(object):
                 (self.ref, self.height))
 
     def set_cursor_x(self, x):
-        """ Set Screen Cursor X Position """
-
+        """Set Screen Cursor X Position."""
         if x >= 0 and x <= self.server.server_info.get("screen_width"):
             self.cursor_x = x
             self.server.request(
@@ -60,8 +56,7 @@ class Screen(object):
                 (self.ref, self.cursor_x))
 
     def set_cursor_y(self, y):
-        """ Set Screen Cursor Y Position """
-
+        """Set Screen Cursor Y Position."""
         if y >= 0 and y <= self.server.server_info.get("screen_height"):
             self.cursor_y = y
             self.server.request(
@@ -69,8 +64,7 @@ class Screen(object):
                 (self.ref, self.cursor_y))
 
     def set_duration(self, duration):
-        """ Set Screen Change Interval Duration """
-
+        """Set Screen Change Interval Duration."""
         if duration > 0:
             self.duration = duration
             self.server.request(
@@ -78,8 +72,7 @@ class Screen(object):
                 (self.ref, (self.duration * 8)))
 
     def set_timeout(self, timeout):
-        """ Set Screen Timeout Duration """
-
+        """Set Screen Timeout Duration."""
         if timeout > 0:
             self.timeout = timeout
             self.server.request(
@@ -87,8 +80,7 @@ class Screen(object):
                 (self.ref, (self.timeout * 8)))
 
     def set_priority(self, priority):
-        """ Set Screen Priority Class """
-
+        """Set Screen Priority Class."""
         if priority in [
                 "hidden",
                 "background",
@@ -102,8 +94,7 @@ class Screen(object):
                 (self.ref, self.priority))
 
     def set_backlight(self, state):
-        """ Set Screen Backlight Mode """
-
+        """Set Screen Backlight Mode."""
         if state in ["on", "off", "toggle", "open", "blink", "flash"]:
             self.backlight = state
             self.server.request(
@@ -111,8 +102,7 @@ class Screen(object):
                 (self.ref, self.backlight))
 
     def set_heartbeat(self, state):
-        """ Set Screen Heartbeat Display Mode """
-
+        """Set Screen Heartbeat Display Mode."""
         if state in ["on", "off", "open"]:
             self.heartbeat = state
             self.server.request(
@@ -120,8 +110,7 @@ class Screen(object):
                 (self.ref, self.heartbeat))
 
     def set_cursor(self, cursor):
-        """ Set Screen Cursor Mode """
-
+        """Set Screen Cursor Mode."""
         if cursor in ["on", "off", "under", "block"]:
             self.cursor = cursor
             self.server.request(
@@ -129,56 +118,49 @@ class Screen(object):
                 (self.ref, self.cursor))
 
     def clear(self):
-        """ Clear Screen """
-
+        """Clear Screen."""
         StringWidget(self, ref="_w1_", text=" "*20, x=1, y=1)
         StringWidget(self, ref="_w2_", text=" "*20, x=1, y=2)
         StringWidget(self, ref="_w3_", text=" "*20, x=1, y=3)
         StringWidget(self, ref="_w4_", text=" "*20, x=1, y=4)
 
     def add_string_widget(self, ref, text="Text", x=1, y=1, frame=None):
-        """ Add String Widget """
-
+        """Add String Widget."""
         if ref not in self.widgets:
             widget = StringWidget(screen=self, ref=ref, text=text, x=x, y=y, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def add_title_widget(self, ref, text="Title"):
-        """ Add Title Widget """
-
+        """Add Title Widget."""
         if ref not in self.widgets:
             widget = TitleWidget(screen=self, ref=ref, text=text)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def add_hbar_widget(self, ref, x=1, y=1, length=10, frame=None):
-        """ Add Horizontal Bar Widget """
-
+        """Add Horizontal Bar Widget."""
         if ref not in self.widgets:
             widget = HBarWidget(screen=self, ref=ref, x=x, y=y, length=length, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def add_vbar_widget(self, ref, x=1, y=1, length=10, frame=None):
-        """ Add Vertical Bar Widget """
-
+        """Add Vertical Bar Widget."""
         if ref not in self.widgets:
             widget = VBarWidget(screen=self, ref=ref, x=x, y=y, length=length, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def add_icon_widget(self, ref, x=1, y=1, name="heart", frame=None):
-        """ Add Icon Widget """
-
+        """Add Icon Widget."""
         if ref not in self.widgets:
             widget = IconWidget(screen=self, ref=ref, x=x, y=y, name=name, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def add_scroller_widget(self, ref, left=1, top=1, right=20, bottom=1, direction="h", speed=1, text="Message", frame=None):
-        """ Add Scroller Widget """
-
+        """Add Scroller Widget."""
         if ref not in self.widgets:
             widget = ScrollerWidget(
                 screen=self,
@@ -195,8 +177,7 @@ class Screen(object):
             return self.widgets[ref]
 
     def add_frame_widget(self, ref, left=1, top=1, right=20, bottom=1, width=20, height=4, direction="h", speed=1):
-        """ Add Frame Widget """
-
+        """Add Frame Widget."""
         if ref not in self.widgets:
             widget = FrameWidget(
                 screen=self,
@@ -214,14 +195,13 @@ class Screen(object):
             return self.widgets[ref]
 
     def add_number_widget(self, ref, x=1, value=1, frame=None):
-        """ Add Number Widget """
-
+        """Add Number Widget."""
         if ref not in self.widgets:
             widget = NumberWidget(screen=self, ref=ref, x=x, value=value, frame=frame)
             self.widgets[ref] = widget
             return self.widgets[ref]
 
     def del_widget(self, ref):
-        """ Delete/Remove A Widget """
+        """Delete/Remove A Widget."""
         self.server.request("widget_del %s %s" % (self.name, ref))
         del(self.widgets[ref])
