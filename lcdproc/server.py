@@ -9,6 +9,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import select
+import threading
 
 from .screen import Screen
 
@@ -25,6 +26,7 @@ class Server(object):
         self.server_info = dict()
         self.screens = dict()
         self.keys = list()
+        self.lock = threading.Lock()
 
     def start_session(self):
         """Start a new server Session, recording the server information."""
@@ -42,22 +44,28 @@ class Server(object):
 
     def request(self, command_string):
         """Send a Request command to the server."""
-        self.tn.write((command_string + "\n").encode())
-        if self.debug:
-            print("Telnet Request:  %s" % (command_string))
-        while True:
-            response = urllib.parse.unquote(self.tn.read_until(b"\n").decode())
-            if "success" in response:   # Normal successful reply
-                break
-            if "huh" in response:       # Something went wrong
-                break
-            if "connect" in response:   # Special reply to "hello"
-                break
-            # TODO Keep track of which screen is displayed
-            # Try again if response was key, menu or visibility notification.
-        if "huh" in response or self.debug:
-            print("Telnet Response: %s" % (response[:-1]))
-        return response
+        self.lock.acquire(blocking=True)
+        try:
+            self.tn.write((command_string + "\n").encode())
+            if self.debug:
+                print("Telnet Request:  %s" % (command_string))
+            while True:
+                response = urllib.parse.unquote(self.tn.read_until(b"\n").decode())
+                if "success" in response:   # Normal successful reply
+                    break
+                if "huh" in response:       # Something went wrong
+                    break
+                if "connect" in response:   # Special reply to "hello"
+                    break
+                # TODO Keep track of which screen is displayed
+                # Try again if response was key, menu or visibility notification.
+            if "huh" in response or self.debug:
+                print("Telnet Response: %s" % (response[:-1]))
+            return response
+        except Exception as e:
+            print("Error -- %s" % e)
+        finally:
+            self.lock.release()
 
     def poll(self):
         """Poll the server.
@@ -125,7 +133,7 @@ class Server(object):
 
         Return None or LCDd response on error
         """
-        response = self.request(("output %s" % (value)).encode())
+        response = self.request("output %s" % (value))
         if "success" in response:
             return None
         else:
